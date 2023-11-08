@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { Stream } from "stream";
-import { uploadImagesToBucket } from "@/app/_controllers/clientController";
+import { uploadImagesToBucket } from "@/controllers/clientController";
 
 export default function Page() {
     const [url, setUrl] = useState("")

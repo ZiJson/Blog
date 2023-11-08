@@ -1,44 +1,63 @@
 "use client";
 import React, { useState, useEffect, ReactNode, memo, useCallback } from 'react'
-import { uploadImagesToBucket, uploadPostToDB } from '../_controllers/clientController';
-import TextUploader from '../_components/Card/TextUploader';
-import ImageUploader from '../_components/Card/ImageUploader';
-import TitleUploader from '../_components/Card/TitleUploader';
+import { uploadImagesToBucket, uploadPostToDB } from '../../controllers/clientController';
+import TextUploader from '../../components/TextUploader';
+import ImageUploader from '../../components/ImageUploader';
+import TitleUploader from '../../components/TitleUploader';
 
-export enum SectionType {
-    "Text" = 'text',
-    "Image" = 'image'
+export type TextSection = {
+    id: number
+    type: 'text'
+    deletable: boolean
+    content: string
 }
 
-export interface Section {
-    id: number,
-    type: SectionType,
-    deletable: boolean,
-    content?: string,
-    publicUrl?: string,
-    imgName?: string,
-    description?: string
+export type ImageSection = {
+    id: number
+    type: 'image'
+    deletable: boolean
+    publicUrl: string
+    imgName: string
+    description: string
+
 }
 
-export interface Title {
+export type Section = TextSection | ImageSection
+
+export type Title = {
     title: string,
-    publicUrl?: string,
-    name?: string
+    publicUrl: string,
+    name: string
+}
+
+const newImageSection: ImageSection = {
+    id: 0,
+    type: "image",
+    deletable: true,
+    publicUrl: "",
+    imgName: "",
+    description: ""
+}
+
+const newTextSection: TextSection = {
+    id: 0,
+    type: "text",
+    deletable: true,
+    content: ""
 }
 
 const AdminPage = () => {
     const [title, setTitle] = useState<Title>({ title: "", publicUrl: "", name: "" })
     const [sections, setSections] = useState<Section[]>([{
+        ...newTextSection,
         id: 1,
-        type: SectionType.Text,
-        content: "",
         deletable: false
     }])
     const [reset, setRest] = useState(false)
     const clear = () => {
-        const sectionExample = {
+        const sectionExample: TextSection = {
             id: 1,
-            type: SectionType.Text,
+            type: 'text',
             content: "",
             deletable: false
         }
@@ -52,7 +71,7 @@ const AdminPage = () => {
             alert("your title is invalid!")
             return
         }
-        else if (!(sections[0]).content) {
+        else if (!(sections[0] as TextSection).content) {
             alert("your first section is empty")
             return
         }
@@ -66,11 +85,12 @@ const AdminPage = () => {
 
     }
 
-    const writeTextHandler = (e: any) => {
+    const writeTextHandler = useCallback((e: any) => {
         e.preventDefault()
-        console.log(sections)
         const { name: id, value } = e.target;
-        if (sections[id - 1].content == value) return
+        const curSection = sections[id - 1];
+        if (curSection.type == "image") return
+        if (curSection.content == value) return
         const newSections = sections.map((section) => {
             if (section.id == id) {
                 return {
@@ -81,8 +101,8 @@ const AdminPage = () => {
             return section
         })
         setSections(newSections)
-    }
-    const updateImageSection = (id: number, publicUrl: string, description: string) => {
+    }, [sections])
+    const updateImageSection = useCallback((id: number, publicUrl: string, description: string) => {
         const newSections = sections.map((section) => {
             if (section.id == id) {
                 return {
@@ -94,24 +114,30 @@ const AdminPage = () => {
             return section
         })
         setSections(newSections)
-    }
+    }, [sections])
 
-    const addSection = (id: number, type: SectionType) => {
+    const addSection = useCallback((id: number, type: "text" | "image") => {
         console.log("add section", id)
+        const newSection: Section =
+        {
+            ...type == 'text' ? newTextSection : newImageSection,
+            id: id + 1
+        }
+
 
         const newSections = new Array<Section>()
         for (let section of sections) {
             if (section.id <= id) newSections.push(section);
-            if (section.id == id) newSections.push({ id: id + 1, type, deletable: true })
+            if (section.id == id) newSections.push(newSection)
             if (section.id > id) newSections.push({
                 ...section,
                 id: section.id + 1
             })
         }
         setSections(newSections)
-    }
+    }, [sections])
 
-    const deleteSection = (id: number) => {
+    const deleteSection = useCallback((id: number) => {
         console.log("delete section :", id)
         const newSections: Section[] = new Array();
         for (let section of sections) {
@@ -124,7 +150,7 @@ const AdminPage = () => {
             }
         }
         setSections(newSections)
-    }
+    }, [sections])
 
     const updateTitle = (prop: Title) => {
         setTitle(prop);
@@ -134,7 +160,7 @@ const AdminPage = () => {
 
 
         sections.map((section) => (
-            section.type == SectionType.Text ?
+            section.type == "text" ?
                 <TextUploader key={section.id} section={section} deleteHandler={deleteSection} writeTextHandler={writeTextHandler} addSection={addSection} />
                 :
                 <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} />
@@ -144,7 +170,14 @@ const AdminPage = () => {
     return (
         <div className='mx-auto px-24 pt-12 pb-12 flex flex-col gap-6 items-center'>
             <TitleUploader updateTitle={updateTitle} title={title} setTitle={setTitle} reset={reset} />
-            <SectionList/>  
+            {
+                sections.map((section) => (
+                    section.type == "text" ?
+                        <TextUploader key={section.id} section={section} deleteHandler={deleteSection} writeTextHandler={writeTextHandler} addSection={addSection} />
+                        :
+                        <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} />
+                ))
+            }
             <button onClick={handleSubmit} className='p-2 font-bold text-white rounded-xl border border-slate-500 shadow-lg bg-slate-600 hover:bg-slate-500' >Create New Post</button>
         </div>
     )

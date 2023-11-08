@@ -1,17 +1,17 @@
 "use client";
-import { Section, SectionType } from "@/app/admin/page";
-import { uploadImagesToBucket } from "@/app/_controllers/clientController";
-import { useEffect, useRef, useState } from "react";
+import { Section, ImageSection } from "@/app/admin/page";
+import { uploadImagesToBucket } from "@/controllers/clientController";
+import { useEffect, useRef, useState,memo } from "react";
 import Image from "next/image";
 
-interface props {
-    section: Section,
+type props =  {
+    section: ImageSection,
     deleteHandler: (id: number) => void,
     updateImageSection: (id: number, publicUrl: string, description: string) => void,
-    addSection: (id: number, type: SectionType) => void
+    addSection: (id: number, type: "text"|"image") => void
 }
 
-export interface InputFile {
+export type InputFile = {
     file?: File,
     url: string,
     name: string,
@@ -23,7 +23,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
         url: section.publicUrl as string,
         name: section.imgName as string,
         description: section.description
-
+        
     })
     const [onLoad, setOnLoading] = useState(false)
     // useEffect(() => {
@@ -38,7 +38,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
     const submitHandler = async (e: any) => {
         setOnLoading(true)
         if (!inputFile || !inputFile.file) return
-        const url = await uploadImagesToBucket([inputFile.file]);
+        const url = await uploadImagesToBucket([inputFile.file]).then((res)=>{setOnLoading(false);return res});
         updateImageSection(section.id, url, inputFile.description as string)
     }
     const handleFileOnChange = (e: any) => {
@@ -72,7 +72,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
     }
     const isPublic = () => {
         const url = inputFile?.url
-        if (section.publicUrl && !url) return true
+        if (section.publicUrl ) return true
         if (!url || (url?.split(":"))[0] == "blob" || section.publicUrl !== url) return false
         return true
     }
@@ -83,10 +83,10 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div >
-            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, SectionType.Image)}>
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'image')}>
                 image
             </button>
-            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, SectionType.Text)}>
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'text')}>
                 text
             </button>
         </div >
@@ -120,14 +120,14 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
                         <span className="">{inputFile.name}</span>
                         <br />
                         <label className="block font-semibold my-2">Description:</label>
-                        <textarea placeholder='what is this image about?' defaultValue={section.description} onBlur={handleTextOnChange} className="border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+                        <textarea placeholder='what is this image about?' value={inputFile.description} onChange={handleTextOnChange} className="border border-gray-300 py-2 px-3 rounded-lg"></textarea>
                     </>
                     : ""
                 }
 
 
             </div>
-            <button disabled={onLoad || inputFile.file ? false : true} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
+            <button disabled={onLoad || inputFile.file==undefined || inputFile.description==undefined || inputFile.description==""} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
                 {onLoad ?
                     <>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="animate-spin w-6 h-6 ">
@@ -151,4 +151,4 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
     )
 }
 
-export default ImageUploader
+export default memo(ImageUploader)

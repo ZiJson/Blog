@@ -1,5 +1,5 @@
 
-import { connectToDatabase } from "@/app/_utils/mongodb"
+import { connectToDatabase } from "@/utils/mongodb"
 
 export async function POST(req: Request) {
     const { db } = await connectToDatabase()

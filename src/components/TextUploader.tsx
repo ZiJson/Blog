@@ -1,19 +1,20 @@
 "use client"
-import { Section, SectionType } from "@/app/admin/page";
+import { Section, TextSection } from "@/app/admin/page";
 import { ReactNode, useState, memo } from "react";
 
-interface props {
-    section: Section,
+type props = {
+    section: TextSection,
     deleteHandler: (id: number) => void,
     writeTextHandler: (e: any) => void,
-    addSection: (id: number, type: SectionType) => void
+    addSection: (id: number, type: "text" | "image") => void
 }
 
-const TextUploader = ({ section
-    , deleteHandler, writeTextHandler, addSection
+const TextUploader = ({
+    section,
+    deleteHandler,
+    writeTextHandler,
+    addSection
 }: props) => {
-    console.log(section.content as string)
-
     const DeleteBtn = () => {
         return (
             <div className="absolute top-3 right-3 rounded hover:text-slate-500 hover:cursor-pointer" onClick={() => deleteHandler(section.id)}>
@@ -30,10 +31,10 @@ const TextUploader = ({ section
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div >
-            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, SectionType.Image)}>
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'image')}>
                 image
             </button>
-            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, SectionType.Text)}>
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'text')}>
                 text
             </button>
         </div >
@@ -44,8 +45,8 @@ const TextUploader = ({ section
             {section.deletable ? <DeleteBtn /> : ""}
             <AddingBtns />
             <label htmlFor={`section${section.id}`} className="block font-bold mb-2">Section {section.id}.</label>
-            <textarea id={`section${section.id}`} name={`${section.id}`} defaultValue={section.content as string} onBlur={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+            <textarea id={`section${section.id}`} name={`${section.id}`} value={section.content} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
         </div>
     )
 }
-export default (TextUploader);
+export default memo(TextUploader);

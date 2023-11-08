@@ -1,4 +1,4 @@
-import { connectToDatabase } from "@/app/_utils/mongodb"
+import { connectToDatabase } from "@/utils/mongodb"
 import { stringify } from "querystring"
 import { json } from "stream/consumers"
 

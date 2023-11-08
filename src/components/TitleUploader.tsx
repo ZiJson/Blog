@@ -1,12 +1,12 @@
 "use client";
 import { Section, SectionType } from "@/app/admin/page";
-import { uploadImagesToBucket } from "@/app/_controllers/clientController";
+import { uploadImagesToBucket } from "@/controllers/clientController";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { InputFile } from "./ImageUploader";
 import { Title } from "@/app/admin/page";
 
-interface props {
+type props = {
     updateTitle: (prop: Title) => void,
     title: Title,
     setTitle: React.Dispatch<React.SetStateAction<Title>>,

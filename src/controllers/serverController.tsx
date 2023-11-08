@@ -1,7 +1,7 @@
 import { ObjectId } from "mongodb"
-import { connectToDatabase } from "../_utils/mongodb"
-import { connectToBucket } from "../_utils/gcp_storage"
-import { Post } from "../page"
+import { connectToDatabase } from "../utils/mongodb"
+import { connectToBucket } from "../utils/gcp_storage"
+import { Post } from "../app/page"
 
 export async function getPosts(): Promise<Post[]> {
     const { db } = await connectToDatabase()

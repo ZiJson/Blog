@@ -1,4 +1,4 @@
-import { connectToBucket } from "@/app/_utils/gcp_storage"
+import { connectToBucket } from "@/utils/gcp_storage"
 const { bucket, storage } = connectToBucket()
 
 interface imgBuffer {
