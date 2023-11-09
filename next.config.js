@@ -9,8 +9,7 @@ const nextConfig = {
                 pathname: '/blog_picture/**',
             },
         ],
-    },
-    output: 'export'
+    }
 }
 
 module.exports = nextConfig
