@@ -76,7 +76,7 @@ jobs:
       - name: Add enviroment variables
         run: |
           touch .env.local
-          echo MONGODB_URI=${{ secrets.MONGOB_URL }} >> .env.local
+          echo MONGODB_URI=${{ secrets.MONGOB_URI }} >> .env.local
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
