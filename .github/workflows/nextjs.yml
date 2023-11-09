@@ -74,7 +74,9 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run:  touch .env.local
+              echo MONGODB_URI = mongodb+srv://blog_admin:fWXtyB0sfpGsvDu5@postsdata.ljcg7we.mongodb.net/?retryWrites=true&w=majority >> .env.local
+              ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Static HTML export with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next export
       - name: Upload artifact
