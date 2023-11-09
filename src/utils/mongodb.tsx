@@ -23,7 +23,7 @@ export async function connectToDatabase() {
         await listDatabases(client);
 
     } catch (e) {
-        console.error(e);
+        console.error("error",mongodb_url,e);
     } finally {
         console.log("database contnected!")
     }
