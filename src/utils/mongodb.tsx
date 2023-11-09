@@ -14,6 +14,7 @@ async function listDatabases(client: MongoClient) {
 };
 
 export async function connectToDatabase() {
+    console.log(mongodb_url)
     try {
         // Connect to the MongoDB cluster
         await client.connect();
