@@ -6,7 +6,7 @@ interface imgBuffer {
     buffer: Buffer
 }
 
-export const uploadImage = (file: imgBuffer) => new Promise<string>((resolve, reject) => {
+const uploadImage = (file: imgBuffer) => new Promise<string>((resolve, reject) => {
     const { originalName, buffer } = file
 
     const blob = bucket.file(originalName.replace(/ /g, "_"))

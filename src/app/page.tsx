@@ -1,15 +1,14 @@
 import Image from 'next/image'
 import Card from '../components/Card'
-import test from '@/app/_test/testPost.json'
 import { Cols } from '../components/Card';
 import postcss from 'postcss';
 import { getPosts } from '@/controllers/serverController'
-import { Title, Section } from './admin/page';
+import { PostTitle, Section } from './admin/page';
 import Header from '@/components/Header';
 import Background from '@/components/BackGround';
 export type Post = {
   _id: string,
-  title: Title,
+  title: PostTitle,
   content: Section[],
   date: string
 }
