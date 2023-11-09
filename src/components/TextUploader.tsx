@@ -39,13 +39,32 @@ const TextUploader = ({
             </button>
         </div >
     )
+    const handleOnClick = (e:any) => {
+        e.preventDefault()
+        const fakeInputChange = {
+            preventDefault:()=>{},
+            target:{
+                name:e.target.name,
+                role:"title",
+                value:""
+            }
+        }
+        writeTextHandler(fakeInputChange)
+    }
 
     return (
         <div className="px-20 pt-4 pb-14 rounded-2xl bg-slate-300 w-[40rem] border border-slate-400 shadow-xl relative">
             {section.deletable ? <DeleteBtn /> : ""}
             <AddingBtns />
             <label htmlFor={`section${section.id}`} className="block font-bold mb-2">Section {section.id}.</label>
-            <textarea id={`section${section.id}`} name={`${section.id}`} value={section.content} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+            <label htmlFor={`section_title${section.id}`} className="block font-medium mb-2">title :</label>
+            <div className="flex items-center gap-2 ">
+                <input type="text" id={`section_title${section.id}`} placeholder="optional" role="title" minLength={3} name={`${section.id}`} value={section.sectionTitle} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></input>
+                <button name={`${section.id}`} className="px-1 hover:bg-slate-200 h-fit rounded bg-slate-100" onClick={handleOnClick}>clear</button>
+            </div>
+            <label htmlFor={`section${section.id}`} className="block font-medium mb-2">content :</label>
+            <textarea id={`section${section.id}`} role="article" name={`${section.id}`} value={section.content} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+
         </div>
     )
 }

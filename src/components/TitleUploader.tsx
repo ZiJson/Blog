@@ -1,15 +1,14 @@
 "use client";
-import { Section, SectionType } from "@/app/admin/page";
 import { uploadImagesToBucket } from "@/controllers/clientController";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { InputFile } from "./ImageUploader";
-import { Title } from "@/app/admin/page";
+import { PostTitle } from "@/app/admin/page";
 
 type props = {
-    updateTitle: (prop: Title) => void,
-    title: Title,
-    setTitle: React.Dispatch<React.SetStateAction<Title>>,
+    updateTitle: (prop: PostTitle) => void,
+    title: PostTitle,
+    setTitle: React.Dispatch<React.SetStateAction<PostTitle>>,
     reset: boolean
 }
 
@@ -48,7 +47,7 @@ const TitleUploader = ({ updateTitle, title, setTitle, reset }: props) => {
         if (!title || !inputFile.file) return
         setOnLoad(true)
         const url: string = await uploadImagesToBucket([inputFile.file]).then((res) => { setOnLoad(false); return res });
-        const prop: Title = {
+        const prop: PostTitle = {
             ...title,
             publicUrl: url,
             name: inputFile.name

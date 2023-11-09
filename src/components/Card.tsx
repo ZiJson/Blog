@@ -31,7 +31,7 @@ const CardType1 = ({ post }: { post: Post }) => {
                     <Image src={post.title.publicUrl as string} alt="sample" fill className=" object-cover rounded-lg transition duration-500 group-hover:scale-105 group-hover:shadow-xl"></Image>
                 </div>
                 <div className="w-full h-2/5 flex flex-col gap-3 mt-3">
-                    <div className="line-clamp-2 text-2xl font-semibold text-slate-800 transition duration-700 ease-in-out group-hover:translate-x-3">
+                    <div className="line-clamp-2 min-h-[4rem] text-2xl font-semibold text-slate-800 transition duration-700 ease-in-out group-hover:translate-x-3">
                         {post.title.title}
                     </div>
                     <div className="text-base font-semibold text-slate-600 transition duration-700 ease-in-out group-hover:translate-x-6">

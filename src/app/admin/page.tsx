@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect, ReactNode, memo, useCallback } from 'react'
-import { uploadImagesToBucket, uploadPostToDB } from '../../controllers/clientController';
+import React, { useState, useCallback } from 'react'
+import { uploadPostToDB } from '../../controllers/clientController';
 import TextUploader from '../../components/TextUploader';
 import ImageUploader from '../../components/ImageUploader';
 import TitleUploader from '../../components/TitleUploader';
@@ -9,7 +9,8 @@ export type TextSection = {
     id: number
     type: 'text'
     deletable: boolean
-    content: string
+    content: string,
+    sectionTitle:string
 }
 
 export type ImageSection = {
@@ -19,12 +20,11 @@ export type ImageSection = {
     publicUrl: string
     imgName: string
     description: string
-
 }
 
 export type Section = TextSection | ImageSection
 
-export type Title = {
+export type PostTitle = {
     title: string,
     publicUrl: string,
     name: string
@@ -43,11 +43,12 @@ const newTextSection: TextSection = {
     id: 0,
     type: "text",
     deletable: true,
-    content: ""
+    content: "",
+    sectionTitle:""
 }
 
 const AdminPage = () => {
-    const [title, setTitle] = useState<Title>({ title: "", publicUrl: "", name: "" })
+    const [title, setTitle] = useState<PostTitle>({ title: "", publicUrl: "", name: "" })
     const [sections, setSections] = useState<Section[]>([{
         ...newTextSection,
         id: 1,
@@ -55,15 +56,13 @@ const AdminPage = () => {
     }])
     const [reset, setRest] = useState(false)
     const clear = () => {
-        const sectionExample: TextSection = {
-            id: 1,
-            type: 'text',
-            content: "",
-            deletable: false
-        }
         console.log("clean")
         setRest(pre => !pre)
-        setSections([sectionExample])
+        setSections([{
+            ...newTextSection,
+            id:1,
+            deletable:false
+        }])
         setTitle({ title: "", publicUrl: "", name: "" })
     }
     const handleSubmit = async () => {
@@ -87,20 +86,26 @@ const AdminPage = () => {
 
     const writeTextHandler = useCallback((e: any) => {
         e.preventDefault()
-        const { name: id, value } = e.target;
+        const { name: id, value, role } = e.target;
         const curSection = sections[id - 1];
         if (curSection.type == "image") return
-        if (curSection.content == value) return
         const newSections = sections.map((section) => {
             if (section.id == id) {
-                return {
+                return role=="article"?
+                {
                     ...section,
                     content: value
+                }:
+                {
+                    ...section,
+                    sectionTitle:value
                 }
             }
             return section
         })
+        console.log(newSections)
         setSections(newSections)
+
     }, [sections])
     const updateImageSection = useCallback((id: number, publicUrl: string, description: string) => {
         const newSections = sections.map((section) => {
@@ -152,7 +157,7 @@ const AdminPage = () => {
         setSections(newSections)
     }, [sections])
 
-    const updateTitle = (prop: Title) => {
+    const updateTitle = (prop: PostTitle) => {
         setTitle(prop);
     }
 
