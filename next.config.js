@@ -9,6 +9,7 @@ const nextConfig = {
                 pathname: '/blog_picture/**',
             },
         ],
+        unoptimized: true
     },
     output: 'export'
 }

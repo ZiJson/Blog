@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="rounded-full aspect-square w-15 border-2  overflow-hidden">
                 <Image src="https://storage.googleapis.com/blog_picture/avatar.jpeg" alt="avatar" width={48} height={48}></Image>
             </div>
-            <Medias />
+            <Medias dark={false}/>
             <Divider text="" />
             <div className=" flex gap-3">
                 <svg width="78.8" height="16" viewBox="0 0 394 80" fill="none" xmlns="http://www.w3.org/2000/svg">

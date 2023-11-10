@@ -22,10 +22,10 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={inter.className}>
-        <div className="min-h-screen">
+        <div className="min-h-screen overflow-hidden ">
           {children}
+          <Footer />
         </div>
-        <Footer />
       </body>
     </html>
   )

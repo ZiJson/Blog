@@ -23,8 +23,8 @@ export default async function Home() {
   return (
     <>
       <Background/>
-      <div className='container flex flex-col px-10 mx-auto sm:px-10 lg:px-24 xl:px-36 pb-12 '>
-        <Header />
+      <div className='container flex flex-col px-8 mx-auto lg:px-24 pb-12 '>
+        <Header dark={false}/>
         <div className='content sm:grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 '>
           {posts.map((post, index) => (<Card key={post._id.toString()} post={post} col={cardTypeList[index] ? cardTypeList[index] : "1"} />))}      </div>
       </div>

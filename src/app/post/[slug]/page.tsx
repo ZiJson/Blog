@@ -1,11 +1,8 @@
-import Image from 'next/image'
-import pic from 'src/app/_components/Card/sample.jpeg'
-import { Post } from '@/app/page'
 import { getPost, getPosts } from '@/controllers/serverController'
 import PostTitle from '@/components/PostTitle'
 import TextContent from '@/components/TextContent'
 import ImageContent from '@/components/ImageContent'
-import Header from '@/components/Header'
+import PostHeader from '@/components/PostHeader'
 
 export async function generateStaticParams() {
   const posts = await getPosts()
@@ -22,11 +19,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   return (
     <>
       <div className='fixed top-0 left-16 z-50'>
-        <Header dark={true}/>
+        <PostHeader/>
       </div>
       <div>
         <PostTitle title={title.title} imgUrl={title.publicUrl} />
-        <div className='container flex flex-col items-center gap-8 mx-auto px-80 pt-12 pb-12 min-h-screen'>
+        <div className='container flex flex-col items-center mx-auto  min-h-screen gap-6 md:gap-10 py-16 md:pt-4 px-4 md:px-20 lg:px-80 '>
           {content.map((section) => (
             section.type == "text" ?
               <>
