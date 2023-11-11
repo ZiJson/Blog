@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Footer = () => {
     return (
-        <div className="w-full flex flex-col items-center gap-3 m-10 mx-auto">
+        <div className="w-full flex flex-col items-center gap-3 pt-28 mx-auto bg-white">
             <div className="rounded-full aspect-square w-15 border-2  overflow-hidden">
                 <Image src="https://storage.googleapis.com/blog_picture/avatar.jpeg" alt="avatar" width={48} height={48}></Image>
             </div>

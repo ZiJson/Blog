@@ -1,4 +1,5 @@
 import { connectToBucket } from "@/utils/gcp_storage"
+import { NextRequest } from "next/server"
 const { bucket, storage } = connectToBucket()
 
 interface imgBuffer {
@@ -26,10 +27,10 @@ const uploadImage = (file: imgBuffer) => new Promise<string>((resolve, reject) =
         .end(buffer)
 })
 
-export async function POST(req: Request) {
-    const data = await req.formData()
+export async function POST(req: NextRequest) {
+    let data = await req.formData();
     const files: File[] | null = data.getAll('file') as unknown as File[]
-    // console.log(files)
+    console.log("get post files:",files)
 
     if (!files || files.length < 1) {
         return Response.json({ success: false })

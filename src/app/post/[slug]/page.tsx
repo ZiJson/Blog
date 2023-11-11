@@ -18,11 +18,11 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { title, content, date } = post
   return (
     <>
-      <div className='fixed top-0 left-16 z-50'>
+      <div className='fixed -top-4 left-8 z-50'>
         <PostHeader/>
       </div>
-      <div>
         <PostTitle title={title.title} imgUrl={title.publicUrl} />
+      <div className='bg-white'>
         <div className='container flex flex-col items-center mx-auto  min-h-screen gap-6 md:gap-10 py-16 md:pt-4 px-4 md:px-20 lg:px-40 xl:px-80 '>
           {content.map((section) => (
             section.type == "text" ?
