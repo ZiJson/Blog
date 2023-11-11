@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    basePath: "/Blog",
     output: 'export',
     images: {
         remotePatterns: [
