@@ -28,7 +28,11 @@ const CardType1 = ({ post }: { post: Post }) => {
         <Link href={`/post/${post._id}`} className=" col-span-1">
             <div className="group h-[60vh]">
                 <div className="w-full h-1/2 relative">
-                    <Image src={post.title.publicUrl as string} alt="sample" fill className=" object-cover rounded-lg transition duration-500 group-hover:scale-105 group-hover:shadow-xl"></Image>
+                    <Image src={post.title.publicUrl as string} alt="sample"
+                        fill={true}
+                        sizes="(min-width: 1540px) 416px, (min-width: 1280px) 331px, (min-width: 1040px) 245px, (min-width: 780px) 328px, (min-width: 640px) 264px, calc(100vw - 64px)"
+                        className="object-cover rounded-lg transition duration-500 group-hover:scale-105 group-hover:shadow-xl">
+                    </Image>
                 </div>
                 <div className="w-full h-2/5 flex flex-col gap-3 mt-3">
                     <div className="line-clamp-2 min-h-[4rem] text-2xl font-semibold text-slate-800 transition duration-700 ease-in-out group-hover:translate-x-3">

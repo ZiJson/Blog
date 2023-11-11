@@ -9,7 +9,8 @@ const nextConfig = {
                 pathname: '/blog_picture/**',
             },
         ],
-        unoptimized: true
+        loader: 'custom',
+        loaderFile: './GCSloader.ts',
     },
     output: 'export'
 }
