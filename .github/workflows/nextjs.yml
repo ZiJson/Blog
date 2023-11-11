@@ -84,7 +84,7 @@ jobs:
         with:
           path: ./out 
       - name: Test
-        run: echo ./out/index.html
+        run: cat ./out/index.html
 
   # Deployment job
   deploy:
