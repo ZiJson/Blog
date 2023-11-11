@@ -14,7 +14,7 @@ const checkOver = (y:number,h:number):boolean => {
 const useHeaderMode = (): DarkMode => {
     const scrollXY = useScroll();
     const windowDimensions = useWindowDimensions()
-    const header_height = windowDimensions.height * (0.8)
+    const header_height = windowDimensions.height * (windowDimensions.width>768?0.8:0.6)
     const [darkMode, setDarkMode] = useState(true)
     useEffect(() => {
         setDarkMode(!checkOver(scrollXY.y,header_height))

@@ -21,6 +21,11 @@ const Card = (props: PropsType) => {
     )
 }
 
+const customDateFormate = (date:Date):string => {
+    const Year = date.getFullYear(),Month = date.getMonth(),Date = date.getDate()
+    return `${Year}-${Month}-${Date}`
+}
+
 const CardType1 = ({ post }: { post: Post }) => {
     const date = new Date(post.date)
     const firstSection = post.content[0] as TextSection
@@ -34,12 +39,12 @@ const CardType1 = ({ post }: { post: Post }) => {
                         className="object-cover rounded-lg transition duration-500 group-hover:scale-105 group-hover:shadow-xl">
                     </Image>
                 </div>
-                <div className="w-full h-2/5 flex flex-col gap-3 mt-3">
+                <div className="w-full h-2/5 flex flex-col gap-1 md:gap-3 mt-3">
                     <div className="line-clamp-2 min-h-[4rem] text-2xl font-semibold text-slate-800 transition duration-700 ease-in-out group-hover:translate-x-3">
                         {post.title.title}
                     </div>
                     <div className="text-base font-semibold text-slate-600 transition duration-700 ease-in-out group-hover:translate-x-6">
-                        {date.toLocaleDateString()}
+                        {customDateFormate(date)}
                     </div>
                     <div className="line-clamp-3 text-base text-slate-400 transition duration-500 ease-in-out group-hover:text-slate-700">
                         {firstSection.content}
