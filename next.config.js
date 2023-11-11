@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    output: 'export',
     images: {
         remotePatterns: [
             {
@@ -11,8 +12,7 @@ const nextConfig = {
         ],
         loader: 'custom',
         loaderFile: './GCSloader.ts',
-    },
-    output: 'export'
+    }
 }
 
 module.exports = nextConfig
