@@ -161,19 +161,8 @@ const AdminPage = () => {
         setTitle(prop);
     }
 
-    const SectionList = () => (
-
-
-        sections.map((section) => (
-            section.type == "text" ?
-                <TextUploader key={section.id} section={section} deleteHandler={deleteSection} writeTextHandler={writeTextHandler} addSection={addSection} />
-                :
-                <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} />
-        ))
-
-    )
     return (
-        <div className='mx-auto px-24 pt-12 pb-12 flex flex-col gap-6 items-center'>
+        <div className='container mx-auto px-3 max-w-2xl pt-12 pb-12 flex flex-col gap-6 items-center'>
             <TitleUploader updateTitle={updateTitle} title={title} setTitle={setTitle} reset={reset} />
             {
                 sections.map((section) => (

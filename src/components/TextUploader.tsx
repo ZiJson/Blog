@@ -53,7 +53,7 @@ const TextUploader = ({
     }
 
     return (
-        <div className="px-20 pt-4 pb-14 rounded-2xl bg-slate-300 w-[40rem] border border-slate-400 shadow-xl relative">
+        <div className="px-3 pt-4 pb-14 rounded-2xl bg-slate-300 w-full border border-slate-400 shadow-xl relative">
             {section.deletable ? <DeleteBtn /> : ""}
             <AddingBtns />
             <label htmlFor={`section${section.id}`} className="block font-bold mb-2">Section {section.id}.</label>

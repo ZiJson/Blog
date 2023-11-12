@@ -67,7 +67,7 @@ const TitleUploader = ({ updateTitle, title, setTitle, reset }: props) => {
     const updatable = isPublic()
 
     return (
-        <div className="px-20 pt-4 pb-4 rounded-2xl bg-slate-300 w-[40rem] border border-slate-400 shadow-xl relative">
+        <div className="px-3 pt-4 pb-4 rounded-2xl bg-slate-300 w-full border border-slate-400 shadow-xl relative">
             <label htmlFor="title" className="block font-bold mb-2">Title</label>
             <textarea id="title" value={title.title} className="w-full border border-gray-300 py-2 px-3 mb-2 rounded-lg" onChange={handelTitleChange}></textarea>
             {

@@ -92,7 +92,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
         </div >
     )
     return (
-        <div className="px-20 pt-4 pb-14 rounded-2xl bg-slate-300 w-[40rem] border border-slate-400 shadow-xl relative">
+        <div className="px-3 pt-4 pb-14 rounded-2xl bg-slate-300 w-full border border-slate-400 shadow-xl relative">
             {section.deletable ? <DeleteBtn /> : ""}
             <AddingBtns />
             <div>
