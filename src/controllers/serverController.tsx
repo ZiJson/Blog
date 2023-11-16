@@ -3,6 +3,7 @@ import { connectToDatabase } from "../utils/mongodb"
 import { connectToBucket } from "../utils/gcp_storage"
 import { Post } from "../app/page"
 
+
 export async function getPosts(): Promise<Post[]> {
     const { db } = await connectToDatabase()
     console.log("server")
@@ -10,7 +11,7 @@ export async function getPosts(): Promise<Post[]> {
     return posts.map((post) => ({ ...post, _id: post._id.toString() } as Post))
 }
 
-export async function getPost(id: string): Promise<Post | null> {
+export const getPost = async (id: string): Promise<Post | null> => {
     if (id.length !== 24) return null;
     const _id = new ObjectId(id)
     const { db } = await connectToDatabase()

@@ -3,17 +3,15 @@ import PostTitle from '@/components/PostTitle'
 import TextContent from '@/components/TextContent'
 import ImageContent from '@/components/ImageContent'
 import PostHeader from '@/components/PostHeader'
+import { cache } from 'react'
+import UserPannel from '@/components/admin/UserPannel'
 
-export async function generateStaticParams() {
-  const posts = await getPosts()
-
-  return posts.map((post) => ({
-    slug: post._id,
-  }))
-}
+export const dynamic = 'force-static'
+export const revalidate = 43200;
+const getCachedPost = cache(getPost);
 
 export default async function Page({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+  const post = await getCachedPost(params.slug);
   if (!post) return <div>Post doesn&apos;t exist</div>
   const { title, content, date } = post
   return (
@@ -37,6 +35,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           )}
         </div>
       </div>
+      <UserPannel inAdmin={false}/>
     </>
   )
 }
