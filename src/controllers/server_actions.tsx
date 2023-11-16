@@ -57,10 +57,10 @@ export const userLogin = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            queryParams: {
-                access_type: 'offline',
-                prompt: 'consent',
-            },
+            // queryParams: {
+            //     access_type: 'offline',
+            //     prompt: 'consent',
+            // },
             // redirectTo: `${domain}/admin`
             redirectTo: `${domain}/auth/callback?next=/admin`
         }
