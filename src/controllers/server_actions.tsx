@@ -7,6 +7,8 @@ import ServerSupabase from "@/utils/supabase/supabase.server";
 import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";
 
+const domain = new URL('https://zijasonblog.zeabur.app')
+
 
 export const updatePost = async (post: Post) => {
     const { db } = await connectToDatabase();
@@ -58,7 +60,7 @@ export const userLogin = async () => {
             //     access_type: 'offline',
             //     prompt: 'consent',
             // },
-            redirectTo: "http://localhost:3000/auth/callback?next=/admin"
+            redirectTo: `${domain}/auth/callback?next=/admin`
         }
     })
     if (data.url) redirect(data.url)

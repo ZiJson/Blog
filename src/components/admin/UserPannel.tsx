@@ -1,7 +1,6 @@
 import { userLogout } from "@/controllers/server_actions"
 import ServerSupabase from "@/utils/supabase/supabase.server"
 import Image from "next/image"
-import { headers } from "next/headers"
 
 type props = {
 }
@@ -9,9 +8,6 @@ type props = {
 const UserPannel = async ({}:props) => {
     const supabase = ServerSupabase()
     const { data: { user }, error } = await supabase.auth.getUser()
-    const header = headers()
-    console.log(header.get("x-pathname"))
-    const InAdminPage = header.get("x-pathname")?.includes('/admin')
     if (!user) return
     const { full_name, avatar_url, email } = user.user_metadata
     return (
