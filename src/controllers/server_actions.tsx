@@ -61,8 +61,8 @@ export const userLogin = async () => {
                 access_type: 'offline',
                 prompt: 'consent',
             },
-            // redirectTo: `${domain}/admin`
-            redirectTo: `${domain}/auth/callback?next=/admin`
+            redirectTo: `${domain}/admin`
+            // redirectTo: `${domain}/auth/callback?next=/admin`
         }
     })
     if (data.url) redirect(data.url)
