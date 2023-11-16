@@ -7,7 +7,7 @@ import ServerSupabase from "@/utils/supabase/supabase.server";
 import { redirect } from 'next/navigation'
 import { revalidatePath } from "next/cache";
 
-const domain = new URL('https://zijasonblog.zeabur.app')
+const domain = process.env.DOMAIN ?? "http://localhost:3000"
 
 
 export const updatePost = async (post: Post) => {

@@ -29,8 +29,8 @@ const PostList = ({ posts }: props) => {
                     </Link>
                 </div>
                 {posts.map((post) => (
-                    <div className="flex group w-fit items-center " key={post._id}>
-                        <div className="divide-x border w-[44rem] border-slate-200 p-2 py-3 rounded-lg shadow-lg flex bg-white group-hover:bg-slate-50">
+                    <div className="flex group w-full justify-center items-center " key={post._id}>
+                        <div className="divide-x border w-[80%] border-slate-200 p-2 py-3 rounded-lg shadow-lg flex bg-white group-hover:bg-slate-50">
                             <div className=" min-w-[90px] text-slate-500">
                                 {(new Date(post.date)).toLocaleDateString()}
                             </div>
