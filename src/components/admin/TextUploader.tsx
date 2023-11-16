@@ -1,5 +1,5 @@
 "use client"
-import { Section, TextSection } from "@/app/admin/page";
+import { Section, TextSection } from "./PostEditor";
 import { ReactNode, useState, memo } from "react";
 
 type props = {

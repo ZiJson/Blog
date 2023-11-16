@@ -18,7 +18,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
   const { title, content, date } = post
   return (
     <>
-      <div className='fixed z-50'>
+      <div className='fixed z-50 pt-10'>
         <PostHeader/>
       </div>
         <PostTitle title={title.title} imgUrl={title.publicUrl} />

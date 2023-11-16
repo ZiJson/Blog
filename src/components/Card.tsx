@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from 'next/image'
 import Link from "next/link";
 import { Post } from "@/app/page";
-import { TextSection } from "@/app/admin/page";
+import { TextSection } from "./admin/PostEditor";
 
 export type Cols = "1" | "2" | "3";
 
@@ -21,8 +21,8 @@ const Card = (props: PropsType) => {
     )
 }
 
-const customDateFormate = (date:Date):string => {
-    const Year = date.getFullYear(),Month = date.getMonth(),Date = date.getDate()
+const customDateFormate = (date: Date): string => {
+    const Year = date.getFullYear(), Month = date.getMonth(), Date = date.getDate()
     return `${Year}-${Month}-${Date}`
 }
 
@@ -80,6 +80,9 @@ const CardType3 = ({ post }: { post: Post }) => {
                             </div>
                         </div>
                     </div>
+                    <div className="text-base font-semibold text-slate-600 transition duration-700 ease-in-out group-hover:translate-x-6">
+                        {customDateFormate(date)}
+                    </div>
                     <div className="line-clamp-2 mt-[1.4rem] text-base text-slate-400 transition duration-500 ease-in-out group-hover:text-slate-700">
                         {firstSection.content}
                     </div>
@@ -101,21 +104,27 @@ const CardType2 = ({ post }: { post: Post }) => {
             </div>
             <div className="col-span-2 h-[60vh] group hidden md:block">
                 <Link href={`/post/${post._id}`}>
-                    <div className="flex h-full flex-col items-end relative">
-                        <div className="w-4/6 h-[77%] relative">
+                    <div className="flex h-full flex-col items-start relative gap-1 ">
+                        <div className="w-full h-[70%] relative mb-2">
                             <Image src={post.title.publicUrl as string} alt="sample" fill className=" object-cover rounded-lg transition duration-500 group-hover:scale-105 group-hover:shadow-xl"></Image>
                         </div>
-                        <div className="w-full flex flex-col text-gray-950 absolute" >
-                            <div className="text-4xl font-bold h-32 bg-slate-800/[.85] rounded-lg leading-tight mt-20 text-white p-2 pl-4 w-2/3 transition-all duration-700 ease-in-out group-hover:translate-x-6 group-hover:bg-slate-800 group-hover:px-6 ">
+                        {/* <div className="w-full flex flex-col text-gray-950 absolute" >
+                            <div className="text-4xl font-bold h-auto bg-slate-800/[.6] rounded-lg leading-tight mt-20 text-white p-3 pl-4 w-2/3 transition-all duration-700 ease-in-out group-hover:translate-x-6 group-hover:bg-slate-800  ">
                                 <p className=" line-clamp-2">
                                     {post.title.title}
                                 </p>
                             </div>
-                            <div className="text-2xl font-semibold text-slate-600/90 p-2 transition duration-700 ease-in-out group-hover:translate-x-16">
+                            <div className="text-2xl font-semibold text-slate-600/90 p-2 transition duration-700 ease-in-out group-hover:translate-x-10">
                                 {date.toLocaleDateString()}
                             </div>
+                        </div> */}
+                        <div className="line-clamp-1 text-2xl font-semibold text-slate-800 transition duration-700 ease-in-out group-hover:translate-x-3">
+                            {post.title.title}
                         </div>
-                        <div className="line-clamp-2 mt-6 text-base text-slate-400 transition duration-500 ease-in-out group-hover:text-slate-700">
+                        <div className="text-base font-semibold text-slate-600 transition duration-700 ease-in-out group-hover:translate-x-6">
+                            {customDateFormate(date)}
+                        </div>
+                        <div className="line-clamp-1 text-base text-slate-400 transition duration-500 ease-in-out group-hover:text-slate-700">
                             {firstSection.content}
                         </div>
                     </div>

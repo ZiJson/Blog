@@ -1,5 +1,5 @@
 "use client";
-import { Section, ImageSection } from "@/app/admin/page";
+import { Section, ImageSection } from "./PostEditor";
 import { uploadImagesToBucket } from "@/controllers/clientController";
 import { useEffect, useRef, useState,memo } from "react";
 import Image from "next/image";
@@ -7,8 +7,9 @@ import Image from "next/image";
 type props =  {
     section: ImageSection,
     deleteHandler: (id: number) => void,
-    updateImageSection: (id: number, publicUrl: string, description: string) => void,
-    addSection: (id: number, type: "text"|"image") => void
+    updateImageSection: (id: number, publicUrl: string) => void,
+    addSection: (id: number, type: "text"|"image") => void,
+    writeImageDescriptionHandler: (e: any) => void
 }
 
 export type InputFile = {
@@ -18,11 +19,10 @@ export type InputFile = {
     description?: string
 }
 
-const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection }: props) => {
+const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection, writeImageDescriptionHandler }: props) => {
     const [inputFile, setInputFile] = useState<InputFile>({
         url: section.publicUrl as string,
         name: section.imgName as string,
-        description: section.description
         
     })
     const [onLoad, setOnLoading] = useState(false)
@@ -39,7 +39,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
         setOnLoading(true)
         if (!inputFile || !inputFile.file) return
         const url = await uploadImagesToBucket([inputFile.file]).then((res)=>{setOnLoading(false);return res});
-        updateImageSection(section.id, url, inputFile.description as string)
+        updateImageSection(section.id, url)
     }
     const handleFileOnChange = (e: any) => {
         e.preventDefault();
@@ -50,15 +50,6 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
             file,
             url,
             name
-        })
-    }
-    const handleTextOnChange = (e: any) => {
-        e.preventDefault();
-        if (!inputFile) return
-        const description = e.target.value;
-        setInputFile({
-            ...inputFile,
-            description
         })
     }
     const DeleteBtn = () => {
@@ -100,7 +91,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
                 {
                     section.publicUrl || inputFile.url ?
                         <div className="h-48 w-60 relative rounded-lg overflow-hidden border border-slate-400 my-3">
-                            <Image src={inputFile.url ? inputFile.url : section.publicUrl as string} className="object-cover" sizes="12rem" alt="" fill />
+                            <Image src={inputFile.url ? inputFile.url : section.publicUrl as string} className="object-cover" sizes="238px" alt="" fill />
                         </div>
                         : ""
                 }
@@ -120,14 +111,14 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection 
                         <span className="">{inputFile.name}</span>
                         <br />
                         <label className="block font-semibold my-2">Description:</label>
-                        <textarea placeholder='what is this image about?' value={inputFile.description} onChange={handleTextOnChange} className="border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+                        <input placeholder='what is this image about?' name={`${section.id}`} value={section.description} onChange={writeImageDescriptionHandler} className="border border-gray-300 py-2 px-3 rounded-lg"></input>
                     </>
                     : ""
                 }
 
 
             </div>
-            <button disabled={onLoad || inputFile.file==undefined || inputFile.description==undefined || inputFile.description==""} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
+            <button disabled={onLoad || inputFile.file==undefined || section.description==undefined || inputFile.description==""} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
                 {onLoad ?
                     <>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="animate-spin w-6 h-6 ">

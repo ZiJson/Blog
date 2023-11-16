@@ -3,7 +3,7 @@ import { uploadImagesToBucket } from "@/controllers/clientController";
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { InputFile } from "./ImageUploader";
-import { PostTitle } from "@/app/admin/page";
+import { PostTitle } from "./PostEditor";
 
 type props = {
     updateTitle: (prop: PostTitle) => void,
@@ -69,11 +69,11 @@ const TitleUploader = ({ updateTitle, title, setTitle, reset }: props) => {
     return (
         <div className="px-3 pt-4 pb-4 rounded-2xl bg-slate-300 w-full border border-slate-400 shadow-xl relative">
             <label htmlFor="title" className="block font-bold mb-2">Title</label>
-            <textarea id="title" value={title.title} className="w-full border border-gray-300 py-2 px-3 mb-2 rounded-lg" onChange={handelTitleChange}></textarea>
+            <input id="title" minLength={3} value={title.title} className="w-full border border-gray-300 py-2 px-3 mb-2 rounded-lg" onChange={handelTitleChange}></input>
             {
-                inputFile.url ?
+                inputFile.url || title.publicUrl ?
                     <div className="h-48 w-60 relative rounded-lg overflow-hidden border border-slate-400 my-3">
-                        <Image src={inputFile.url} className="object-cover" sizes="12rem" alt="" fill />
+                        <Image src={inputFile.url ? inputFile.url : title.publicUrl as string} className="object-cover" sizes="238px" alt="" fill />
                     </div>
                     : ""
             }

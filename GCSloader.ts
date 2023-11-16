@@ -6,5 +6,5 @@ export default function GCS_ImageKit_Loader({
     width?: number
   }) {
     const imageName = src.split('blog_picture/')[1]
-    return `https://ik.imagekit.io/8hrc8aeif/${imageName}?tr=w-${width}`
+    return src.includes('blog_picture/')?`https://ik.imagekit.io/8hrc8aeif/${imageName}?tr=w-${width}`:src
   }
