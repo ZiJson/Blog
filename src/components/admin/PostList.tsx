@@ -17,12 +17,11 @@ const PostList = ({ posts }: props) => {
                 Existing Posts
             </div>
             <div className="flex flex-col gap-4 items-center">
-                <div className="w-[44rem] flex justify-end">
+                <div className="w-[80%] flex justify-end">
                     <Link href='/admin/edit' className="w-fit flex items-center gap-1 bg-slate-200 text-slate-700 font-semibold p-2 rounded-lg hover:bg-slate-300 shadow-lg  border border-slate-300">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                         </svg>
-
                         <span>
                             new post
                         </span>
