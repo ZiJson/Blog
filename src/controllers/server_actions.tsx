@@ -5,9 +5,9 @@ import { ObjectId } from "mongodb";
 import { PostTitle, Section } from "@/components/admin/PostEditor";
 import ServerSupabase from "@/utils/supabase/supabase.server";
 import { redirect } from 'next/navigation'
-import { revalidatePath } from "next/cache";
+import { headers } from 'next/headers'
 
-const domain = process.env.DOMAIN ?? "http://localhost:3000"
+
 
 
 export const updatePost = async (post: Post) => {
@@ -51,27 +51,34 @@ export const deletePost = async (postId: string) => {
     console.log(result)
 }
 
-export const userLogin = async () => {
+export const userLogin = async (fomrData:FormData) => {
+    const headersList = headers();
+    const next = fomrData.get('next')
+    console.log("next:",next)
+    let host = headersList.get('host'); // to get domain
+    const domain = (host?.includes('localhost:') ? "http://" : "https://") + host
     const supabase = ServerSupabase()
-    console.log("env_domain:",domain)
+    console.log("env_domain:", domain)
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-            // queryParams: {
-            //     access_type: 'offline',
-            //     prompt: 'consent',
-            // },
+            queryParams: {
+                access_type: 'offline',
+                prompt: 'consent',
+            },
             // redirectTo: `${domain}/admin`
-            redirectTo: `${domain}/auth/callback?next=/admin`
+            redirectTo: `${domain}/auth/callback?next=${next}`
         }
     })
+    if(error) console.error("error:",error)
     if (data.url) redirect(data.url)
 }
 
-export const userLogout = async () =>{
+export const userLogout = async (formData:FormData) => {
+    const next = formData.get('next') as string ?? '/'
     const supabase = ServerSupabase();
-    const {error} = await supabase.auth.signOut()
-    if(error) console.error(error);
+    const { error } = await supabase.auth.signOut()
+    if (error) console.error(error);
 
-    redirect('/admin/login')
+    redirect(next)
 }
