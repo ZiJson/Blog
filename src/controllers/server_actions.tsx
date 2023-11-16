@@ -53,6 +53,7 @@ export const deletePost = async (postId: string) => {
 
 export const userLogin = async () => {
     const supabase = ServerSupabase()
+    console.log("env_domain:",domain)
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
