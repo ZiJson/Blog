@@ -60,6 +60,7 @@ export const userLogin = async () => {
             //     access_type: 'offline',
             //     prompt: 'consent',
             // },
+            // redirectTo: `${domain}/admin`
             redirectTo: `${domain}/auth/callback?next=/admin`
         }
     })

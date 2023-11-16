@@ -71,7 +71,7 @@ export async function middleware(request: NextRequest) {
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const { data: { admin_role }, error } = await supabase.from('profiles').select().eq('id', user.id).maybeSingle()
-      if (admin_role) return NextResponse.redirect(new URL('/admin/post_create', request.url))
+      if (admin_role) return NextResponse.redirect(new URL('/admin', request.url))
     }
   }
   // console.log("user:", user)
