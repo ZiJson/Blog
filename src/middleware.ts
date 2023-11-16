@@ -61,6 +61,7 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = new URL(request.url)
   if (pathname == '/admin' || pathname.includes("edit")) {
+    console.log('access /admin')
     const { data: { user } } = await supabase.auth.getUser()
     if (user == null) return NextResponse.redirect(new URL('/admin/login', request.url))
     console.log("user logged in")
@@ -68,6 +69,7 @@ export async function middleware(request: NextRequest) {
     if (!admin_role) return NextResponse.redirect(new URL('/admin/login?error=permission_deied', request.url))
   }
   else if (pathname == '/admin/login') {
+    console.log('access /admin/login')
     const { data: { user } } = await supabase.auth.getUser()
     if (user) {
       const { data: { admin_role }, error } = await supabase.from('profiles').select().eq('id', user.id).maybeSingle()
