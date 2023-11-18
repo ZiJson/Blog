@@ -11,6 +11,14 @@ export const dynamic = 'force-static'
 export const revalidate = 43200;
 const getCachedPost = cache(getPost);
 
+export async function generateStaticParams() {
+  const posts = await getPosts()
+ 
+  return posts.map((post) => ({
+    slug: post._id,
+  }))
+}
+
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getCachedPost(params.slug);
   if (!post) return <div>Post doesn&apos;t exist</div>

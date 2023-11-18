@@ -31,7 +31,7 @@ export default async function Home() {
         <div className='content sm:grid grid-cols-1 gap-x-12 gap-y-4 sm:grid-cols-2 lg:grid-cols-3 '>
           {posts.map((post, index) => (<Card key={post._id.toString()} post={post} col={cardTypeList[index] ? cardTypeList[index] : "1"} />))}      </div>
       </div>
-      {/* <UserPannel inAdmin={false}/> */}
+      <UserPannel inAdmin={false}/>
     </>
   )
 }

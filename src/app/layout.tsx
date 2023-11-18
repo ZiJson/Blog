@@ -3,6 +3,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import UserPannel from '@/components/admin/UserPannel'
+import ServerSupabase from '@/utils/supabase/supabase.server'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -11,24 +12,22 @@ export const metadata: Metadata = {
   description: 'personal blog',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
     <html lang="en">
-      <head>
+      {/* <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
+      </head> */}
       <body className={inter.className}>
         <div className="min-h-screen overflow-hidden">
           {children}
           <Footer />
           
         </div>
-      <UserPannel inAdmin={false}/>
-
       </body>
     </html>
   )

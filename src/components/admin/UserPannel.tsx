@@ -1,9 +1,11 @@
+
 import { userLogout } from "@/controllers/server_actions"
 import ServerSupabase from "@/utils/supabase/supabase.server"
 import Image from "next/image"
 import { userLogin } from "@/controllers/server_actions";
 import google_icon from '../../../public/google.svg'
 import Link from "next/link";
+import { User } from "@supabase/supabase-js";
 
 
 // headersList.get('host'); // to get domain
@@ -12,11 +14,11 @@ type props = {
     inAdmin: boolean
 }
 
-const UserPannel = async ({ inAdmin }: props) => {
-
-    const next = inAdmin ? '/admin' : '/'
+const UserPannel = async ({ inAdmin}: props) => {
     const supabase = ServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
+    console.log("reload")
+    const next = inAdmin ? '/admin' : '/'
     if (!user) return (
         <div className=" fixed bottom-6 right-6 flex flex-col items-center group">
             <form>
