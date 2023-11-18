@@ -39,7 +39,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           )}
         </div>
       </div>
-      <UserPannel inAdmin={false}/>
+      {/* <UserPannel inAdmin={false}/> */}
     </>
   )
 }
