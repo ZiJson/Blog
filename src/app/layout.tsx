@@ -25,7 +25,10 @@ export default function RootLayout({
         <div className="min-h-screen overflow-hidden">
           {children}
           <Footer />
+          
         </div>
+      <UserPannel inAdmin={false}/>
+
       </body>
     </html>
   )

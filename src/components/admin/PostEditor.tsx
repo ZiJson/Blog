@@ -1,9 +1,10 @@
 "use client";
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, use } from 'react'
 import { uploadPostToDB } from '@/controllers/clientController';
 import TextUploader from './TextUploader';
 import ImageUploader from './ImageUploader';
 import TitleUploader from './TitleUploader';
+import CodeUploader from './CodeUploader';
 import { Post } from '@/app/page';
 import { updatePost, createPost } from '@/controllers/server_actions';
 import Link from 'next/link';
@@ -17,6 +18,15 @@ export type TextSection = {
     sectionTitle: string
 }
 
+export type CodeSection = {
+    id: number
+    type: 'code'
+    deletable: boolean
+    language: string
+    content: string
+    description: string
+}
+
 export type ImageSection = {
     id: number
     type: 'image'
@@ -26,7 +36,7 @@ export type ImageSection = {
     description: string
 }
 
-export type Section = TextSection | ImageSection
+export type Section = TextSection | ImageSection | CodeSection
 
 export type PostTitle = {
     title: string,
@@ -43,6 +53,15 @@ const newImageSection: ImageSection = {
     description: ""
 }
 
+const newCodeSection: CodeSection = {
+    id: 0,
+    type: "code",
+    deletable: true,
+    language: "jsx",
+    content: "",
+    description:""
+}
+
 const newTextSection: TextSection = {
     id: 0,
     type: "text",
@@ -55,40 +74,12 @@ const PostEditor = ({ post }: { post: Post }) => {
     const [title, setTitle] = useState<PostTitle>(post.title)
     const [sections, setSections] = useState<Section[]>(post.content)
     const [reset, setRest] = useState(false)
-    const clear = () => {
-        console.log("clean")
-        setRest(pre => !pre)
-        setSections([{
-            ...newTextSection,
-            id: 1,
-            deletable: false
-        }])
-        setTitle({ title: "", publicUrl: "", name: "" })
-    }
-    const handleSubmit = async () => {
-        if (!title.title || !title.publicUrl) {
-            alert("your title is invalid!")
-            return
-        }
-        else if (!(sections[0] as TextSection).content) {
-            alert("your first section is empty")
-            return
-        }
-        const res = await uploadPostToDB(title, sections)
-        if (res["acknowledged"] != true) {
-            alert("fail to create, try it latter")
-            return
-        }
-        alert("post created!")
-        clear()
-
-    }
 
     const writeTextHandler = useCallback((e: any) => {
         e.preventDefault()
         const { name: id, value, role } = e.target;
         const curSection = sections[id - 1];
-        if (curSection.type == "image") return
+        if (curSection.type != "text") return
         const newSections = sections.map((section) => {
             if (section.id == id) {
                 return role == "article" ?
@@ -107,6 +98,64 @@ const PostEditor = ({ post }: { post: Post }) => {
         setSections(newSections)
 
     }, [sections])
+
+    const writeCodeHandler = useCallback((e: any) => {
+        e.preventDefault()
+        const { name:id, value } = e.target;
+        console.log(id)
+        const curSection = sections[id - 1];
+        if (curSection.type != "code") return
+        const newSections = sections.map((section) => {
+            if (section.id == id) {
+                return {
+                    ...section,
+                    content: value
+                }
+            }
+            return section
+        })
+        console.log(newSections)
+        setSections(newSections)
+
+    }, [sections])
+
+    const onCodeLangChange = useCallback((e: any) => {
+        e.preventDefault();
+        const { id, value } = e.target;
+        const curSection = sections[id - 1];
+        if (curSection.type != "code") return
+        const newSections = sections.map((section) => {
+            if (section.id == id) {
+                return {
+                    ...section,
+                    language: value
+                }
+            }
+            return section
+        })
+        console.log(newSections)
+        setSections(newSections)
+
+    }, [sections])
+
+    const writeCodeDescriptionHandler = useCallback((e:any)=>{
+        e.preventDefault();
+        const { name:id, value } = e.target;
+        const curSection = sections[id - 1];
+        if (curSection.type != "code") return
+        const newSections = sections.map((section) => {
+            if (section.id == id) {
+                return {
+                    ...section,
+                    description: value
+                }
+            }
+            return section
+        })
+        setSections(newSections)
+
+
+    },[sections])
 
     const writeImageDescriptionHandler = useCallback((e: any) => {
         e.preventDefault();
@@ -139,11 +188,11 @@ const PostEditor = ({ post }: { post: Post }) => {
         setSections(newSections)
     }, [sections])
 
-    const addSection = useCallback((id: number, type: "text" | "image") => {
-        console.log("add section", id)
+    const addSection = useCallback((id: number, type: "text" | "image" | "code") => {
+        console.log("add section", id, type)
         const newSection: Section =
         {
-            ...type == 'text' ? newTextSection : newImageSection,
+            ...(type == 'text' ? newTextSection : type == 'image' ? newImageSection : newCodeSection),
             id: id + 1
         }
 
@@ -197,11 +246,13 @@ const PostEditor = ({ post }: { post: Post }) => {
                     section.type == "text" ?
                         <TextUploader key={section.id} section={section} deleteHandler={deleteSection} writeTextHandler={writeTextHandler} addSection={addSection} />
                         :
-                        <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} writeImageDescriptionHandler={writeImageDescriptionHandler} />
+                        section.type == "image" ?
+                            <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} writeImageDescriptionHandler={writeImageDescriptionHandler} />
+                            : <CodeUploader key={section.id} section={section} deleteHandler={deleteSection} writeCodeHandler={writeCodeHandler} addSection={addSection} onCodeLangChange={onCodeLangChange} writeCodeDescriptionHandler={writeCodeDescriptionHandler}/>
                 ))
             }
             <form>
-                <Submit formAction={post._id == "" ? () => { createPost(title, sections) } : () => { updatePost({ ...post, title, content: sections }) }} text={post._id==""?"Create Post":"Update Post"} />
+                <Submit formAction={post._id == "" ? () => { createPost(title, sections) } : () => { updatePost({ ...post, title, content: sections }) }} text={post._id == "" ? "Create Post" : "Update Post"} />
             </form>
         </div>
     )

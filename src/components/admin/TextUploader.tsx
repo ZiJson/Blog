@@ -6,7 +6,7 @@ type props = {
     section: TextSection,
     deleteHandler: (id: number) => void,
     writeTextHandler: (e: any) => void,
-    addSection: (id: number, type: "text" | "image") => void
+    addSection: (id: number, type: "text" | "image" | "code") => void
 }
 
 const TextUploader = ({
@@ -31,6 +31,9 @@ const TextUploader = ({
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div >
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'code')}>
+                code
+            </button>
             <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'image')}>
                 image
             </button>

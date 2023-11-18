@@ -1,14 +1,14 @@
 "use client";
 import { Section, ImageSection } from "./PostEditor";
 import { uploadImagesToBucket } from "@/controllers/clientController";
-import { useEffect, useRef, useState,memo } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import Image from "next/image";
 
-type props =  {
+type props = {
     section: ImageSection,
     deleteHandler: (id: number) => void,
     updateImageSection: (id: number, publicUrl: string) => void,
-    addSection: (id: number, type: "text"|"image") => void,
+    addSection: (id: number, type: "text" | "image" | "code") => void,
     writeImageDescriptionHandler: (e: any) => void
 }
 
@@ -23,7 +23,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection,
     const [inputFile, setInputFile] = useState<InputFile>({
         url: section.publicUrl as string,
         name: section.imgName as string,
-        
+
     })
     const [onLoad, setOnLoading] = useState(false)
     // useEffect(() => {
@@ -38,7 +38,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection,
     const submitHandler = async (e: any) => {
         setOnLoading(true)
         if (!inputFile || !inputFile.file) return
-        const url = await uploadImagesToBucket([inputFile.file]).then((res)=>{setOnLoading(false);return res});
+        const url = await uploadImagesToBucket([inputFile.file]).then((res) => { setOnLoading(false); return res });
         updateImageSection(section.id, url)
     }
     const handleFileOnChange = (e: any) => {
@@ -63,17 +63,20 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection,
     }
     const isPublic = () => {
         const url = inputFile?.url
-        if (section.publicUrl ) return true
+        if (section.publicUrl) return true
         if (!url || (url?.split(":"))[0] == "blob" || section.publicUrl !== url) return false
         return true
     }
     const AddingBtns = () => (
         <div className='flex flex-row-reverse absolute bottom-2 right-2 items-center max-w-[2rem] bg-slate-500 text-white overflow-hidden group hover:max-w-3xl rounded-xl transition-all duration-500 ease-in-out'>
-            <div className="p-1 transition-all duration-200 hover:cursor-pointer ease-in-out group-hover:rotate-90" >
+            <div className="p-1 transition-all duration-300 hover:cursor-pointer ease-in-out group-hover:rotate-90" >
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div >
+            <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'code')}>
+                code
+            </button>
             <button className='py-1 px-2 w-fit hover:bg-slate-600' onClick={() => addSection(section.id, 'image')}>
                 image
             </button>
@@ -118,7 +121,7 @@ const ImageUploader = ({ section, deleteHandler, updateImageSection, addSection,
 
 
             </div>
-            <button disabled={onLoad || inputFile.file==undefined || section.description==undefined || inputFile.description==""} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
+            <button disabled={onLoad || inputFile.file == undefined || section.description == undefined || inputFile.description == ""} className='bg-slate-600 text-white py-1 px-2 my-2 rounded w-fit flex gap-1 hover:bg-slate-500 disabled:cursor-not-allowed' onClick={submitHandler}>
                 {onLoad ?
                     <>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="animate-spin w-6 h-6 ">

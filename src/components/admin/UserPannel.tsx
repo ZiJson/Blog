@@ -15,7 +15,6 @@ type props = {
 const UserPannel = async ({ inAdmin }: props) => {
 
     const next = inAdmin ? '/admin' : '/'
-    console.log()
     const supabase = ServerSupabase()
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return (

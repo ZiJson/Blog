@@ -1,6 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server'
+import { headers } from 'next/headers'
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url)
@@ -27,10 +28,12 @@ export async function GET(request: Request) {
         },
       }
     )
-
+    const headersList = headers();
+    let host = headersList.get('host'); // to get domain
+    const domain = (host?.includes('localhost:') ? "http://" : "https://") + host
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(new URL(next,process.env.DOMAIN))
+      return NextResponse.redirect(new URL(next,domain))
     }
     console.log(error)
   }

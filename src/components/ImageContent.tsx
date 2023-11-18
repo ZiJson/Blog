@@ -17,7 +17,7 @@ const ImageContent = ({ publicUrl, description }:
                     className="rounded-xl object-cover shadow-xl group-hover:scale-[1.04] transition duration-300 group-hover:shadow-2xl"
                 />
             </div>
-            <div className="text-sm text-slate-400 m-2">
+            <div className="text-sm text-slate-400 m-2 pt-1">
                 {description}
             </div>
         </div>
