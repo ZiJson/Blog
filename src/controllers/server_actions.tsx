@@ -52,9 +52,9 @@ export const deletePost = async (postId: string) => {
 }
 
 export const userLogin = async (fomrData:FormData) => {
-    const headersList = headers();
     const next = fomrData.get('next')
     console.log("next:",next)
+    const headersList = headers();
     let host = headersList.get('host'); // to get domain
     const domain = (host?.includes('localhost:') ? "http://" : "https://") + host
     const supabase = ServerSupabase()
