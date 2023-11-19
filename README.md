@@ -5,7 +5,9 @@ This Blog is a [Next.js](https://nextjs.org/) project with App router, and goes 
 Being more friendly for user who doesn't write code, it can be used by any one who want to business his/ her own blog.
 
 ## Screenshots
+Home page:
 ![App Screenshot](https://github.com/ZiJson/Blog/assets/108473055/ae9b01b9-9124-46f8-9af2-feb7598cde64)
+Post create page:
 ![image](https://github.com/ZiJson/Blog/assets/108473055/7535f306-dc83-4b40-9aad-0e35933e761b)
 
 
@@ -28,17 +30,26 @@ Being more friendly for user who doesn't write code, it can be used by any one w
 ## Technologies Used
 
 **Next js**
-- client and server side
+- server-side-rendering
+- SSG for post page
+- server action in replace of API route
+
+  
 **Tailwind.css**
-- css package
-**MogoDB**
+- css framwork
+
+
+**MongoDB**
 - storing post data
+
 **Google Cloud Storage**
 - storing image
+  
 **Google OAuth**
 - gmail login
+  
 **Supabase - auth**
-- user management
+- user account management
 
 ![Diagram](https://i.ibb.co/Y882dVN/diagram-export-11-19-2023-6-27-56-PM.png)
 
@@ -61,5 +72,5 @@ To run this project, you will need to add the following environment variables to
 
 ## Deployment
 
-[Zeabur](https://dash.zeabur.com/) CI/CD 
+using [Zeabur](https://dash.zeabur.com/) as deploy platform with CI/CD 
 
