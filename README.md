@@ -6,7 +6,8 @@ Being more friendly for user who doesn't write code, it can be used by any one w
 
 ## Screenshots
 ![App Screenshot](https://github.com/ZiJson/Blog/assets/108473055/ae9b01b9-9124-46f8-9af2-feb7598cde64)
-![image](https://github.com/ZiJson/Blog/assets/108473055/ab946997-f7a0-4cea-95da-55e6bf47ae46)
+![image](https://github.com/ZiJson/Blog/assets/108473055/7535f306-dc83-4b40-9aad-0e35933e761b)
+
 
 
 ## Features
