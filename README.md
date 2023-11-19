@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Personal Blog
 
-## Getting Started
 
-First, run the development server:
+This Blog is a [Next.js](https://nextjs.org/) project with App router, and goes with admin dashboard in order to create/ update post conveniently without rebuilding the project.
+Being more friendly for user who doesn't write code, it can be used by any one who want to business his/ her own blog.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Screenshots
+![App Screenshot](https://github.com/ZiJson/Blog/assets/108473055/ae9b01b9-9124-46f8-9af2-feb7598cde64)
+![image](https://github.com/ZiJson/Blog/assets/108473055/ab946997-f7a0-4cea-95da-55e6bf47ae46)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- full responsive to all devise
+- image/code block display
+- admin page
+    - create post
+    - edit post
+    - delete post
+- gmail auth admin portection
+- supabase user management
+## Demo
+![demo](https://zijasonblog.zeabur.app/)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technologies Used
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+**Next js**
+- client and server side
+**Tailwind.css**
+- css package
+**MogoDB**
+- storing post data
+**Google Cloud Storage**
+- storing image
+**Google OAuth**
+- gmail login
+**Supabase - auth**
+- user management
 
-## Deploy on Vercel
+![Diagram](https://i.ibb.co/Y882dVN/diagram-export-11-19-2023-6-27-56-PM.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Authentication Setup
+
+1. create google OAuth service
+2. create Supabase project
+3. connect Supabase auth with google OAuth [Doc](https://supabase.com/docs/guides/auth/social-login/auth-google)
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file
+
+`MONGODB_URI`
+
+`NEXT_PUBLIC_SUPABASE_URL`
+
+`NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+
+## Deployment
+
+[Zeabur](https://dash.zeabur.com/) CI/CD 
+
