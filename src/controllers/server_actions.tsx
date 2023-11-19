@@ -6,6 +6,7 @@ import { PostTitle, Section } from "@/components/admin/PostEditor";
 import ServerSupabase from "@/utils/supabase/supabase.server";
 import { redirect } from 'next/navigation'
 import { headers } from 'next/headers'
+import { revalidatePath } from "next/cache";
 
 
 
@@ -27,6 +28,7 @@ export const updatePost = async (post: Post) => {
 
     );
     console.log(result)
+    revalidatePath(`/post/${post._id}`)
     redirect('/admin')
 
 }

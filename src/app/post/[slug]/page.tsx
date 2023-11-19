@@ -13,7 +13,7 @@ const getCachedPost = cache(getPost);
 
 export async function generateStaticParams() {
   const posts = await getPosts()
- 
+
   return posts.map((post) => ({
     slug: post._id,
   }))
@@ -34,13 +34,13 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {content.map((section) => (
             section.type == "text" ?
               <>
-                {section.sectionTitle == "" ? "" : <div className=" w-full text-slate-700 leading-relaxed text-2xl font-bold tracking-wide">{section.sectionTitle}</div>}
+                {section.sectionTitle == "" || !section.sectionTitle ? null : <div className=" w-full text-slate-700 leading-relaxed text-2xl font-bold tracking-wide">{section.sectionTitle}</div>}
                 <TextContent key={section.id} text={section.content as string} />
               </>
               : section.type == "image" ?
                 <ImageContent key={section.id} publicUrl={section.publicUrl as string} description={section.description as string} />
                 : section.type == "code" ?
-                  <CodeContent key={section.id} code={section.content} lenguage={section.language} description={section.description}/>
+                  <CodeContent key={section.id} code={section.content} lenguage={section.language} description={section.description} />
                   : null
           )
 
