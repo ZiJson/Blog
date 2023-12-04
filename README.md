@@ -4,6 +4,9 @@
 This Blog is a [Next.js](https://nextjs.org/) project with App router, and goes with admin dashboard in order to create/ update post conveniently without rebuilding the project.
 Being more friendly for user who doesn't write code, it can be used by any one who want to business his/ her own blog.
 
+## Demo
+[demo](https://zijasonblog.zeabur.app)
+
 ## Screenshots
 Home page:
 ![App Screenshot](https://github.com/ZiJson/Blog/assets/108473055/ae9b01b9-9124-46f8-9af2-feb7598cde64)
@@ -22,8 +25,6 @@ Post create page:
     - delete post
 - gmail auth admin portection
 - supabase user management
-## Demo
-[demo](https://zijasonblog.zeabur.app)
 
 
 
