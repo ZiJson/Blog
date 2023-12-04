@@ -15,7 +15,7 @@ const Medias = ({ dark, size }: props) => {
     }
     return (
         <div className={`flex items-center gap-2 transition duration-400`}>
-            <a href="/">
+            <a href="https://zijson.github.io/profile-website/">
                 <div className="">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
