@@ -23,7 +23,7 @@ Post create page:
 - gmail auth admin portection
 - supabase user management
 ## Demo
-![demo](https://zijasonblog.zeabur.app/)
+[demo](https://zijasonblog.zeabur.app)
 
 
 
