@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import UserPannel from '@/components/admin/UserPannel'
 import ServerSupabase from '@/utils/supabase/supabase.server'
+import { getUserFromSession } from '@/controllers/serverController'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -17,6 +18,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const user = await getUserFromSession()
   return (
     <html lang="en">
       {/* <head>
@@ -26,8 +28,10 @@ export default async function RootLayout({
         <div className="min-h-screen overflow-hidden">
           {children}
           <Footer />
-          
+
         </div>
+        <UserPannel user={user} />
+
       </body>
     </html>
   )

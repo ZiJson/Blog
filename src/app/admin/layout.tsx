@@ -15,7 +15,7 @@ export default function AdminLayout({
                 <BarHeader dark={false}/>
             </div>
             <section className="min-h-screen">{children}</section>
-            <UserPannel inAdmin/>
+            {/* <UserPannel inAdmin/> */}
         </div>
     )
 }

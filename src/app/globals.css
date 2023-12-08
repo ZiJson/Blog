@@ -19,11 +19,45 @@
 body {
   color: #2d2d2d;
   /* rgb(var(--foreground-rgb)); */
-  background:#ffffff 
-  /* linear-gradient(
+  background: #ffffff
+    /* linear-gradient(
       to bottom,
       transparent,
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb)); */
+}
+
+.text-content strong {
+  position: relative;
+  z-index: 10;
+}
+.text-content strong::before {
+  @apply bg-slate-400;
+  content: "";
+  width: 100%;
+  height: 10px;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.3;
+  z-index: -1;
+}
+.text-content a {
+  @apply font-bold hover:text-slate-600 transition;
+  position: relative;
+  z-index: 10;
+
+}
+.text-content a::before {
+  @apply bg-blue-700 h-[8px] hover:h-full transition-all ;
+  content: "";
+  width: 100%;
+  display: inline-block;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 0.2;
+  z-index: -1;
 }

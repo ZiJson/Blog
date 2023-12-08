@@ -6,19 +6,17 @@ import { userLogin } from "@/controllers/server_actions";
 import google_icon from '../../../public/google.svg'
 import Link from "next/link";
 import { User } from "@supabase/supabase-js";
+import { getProfileFromId } from "@/controllers/serverController";
 
 
 // headersList.get('host'); // to get domain
 // headersList.get('next-url'); // to get url
 type props = {
-    inAdmin: boolean
+    user: User | null
 }
 
-const UserPannel = async ({ inAdmin}: props) => {
-    const supabase = ServerSupabase()
-    const { data: { user } } = await supabase.auth.getUser()
-    console.log("reload")
-    const next = inAdmin ? '/admin' : '/'
+const UserPannel = async ({ user }: props) => {
+    const next = '/'
     if (!user) return (
         <div className=" fixed bottom-6 right-6 flex flex-col items-center group">
             <form>
@@ -30,7 +28,7 @@ const UserPannel = async ({ inAdmin}: props) => {
             </form>
         </div>
     )
-    const { data: { admin_role }, error } = await supabase.from('profiles').select().eq('id', user.id).maybeSingle()
+    const { admin_role } = await getProfileFromId(user.id)
     const { full_name, avatar_url, email } = user.user_metadata
     return (
         <div className=" fixed bottom-6 right-6 flex flex-col items-center group">

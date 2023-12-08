@@ -1,4 +1,4 @@
-import { getPost, getPosts } from '@/controllers/serverController'
+import { getComment, getPost, getPosts } from '@/controllers/serverController'
 import PostTitle from '@/components/PostTitle'
 import TextContent from '@/components/TextContent'
 import ImageContent from '@/components/ImageContent'
@@ -6,9 +6,10 @@ import CodeContent from '@/components/CodeContent'
 import PostHeader from '@/components/PostHeader'
 import { cache } from 'react'
 import UserPannel from '@/components/admin/UserPannel'
+import Comments from '@/components/Comments'
 
-export const dynamic = 'force-static'
-export const revalidate = 43200;
+export const dynamic = 'force-dynamic'
+// export const revalidate = 43200;
 const getCachedPost = cache(getPost);
 
 export async function generateStaticParams() {
@@ -21,6 +22,7 @@ export async function generateStaticParams() {
 
 export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getCachedPost(params.slug);
+  const comments = await getComment(params.slug)
   if (!post) return <div>Post doesn&apos;t exist</div>
   const { title, content, date } = post
   return (
@@ -45,6 +47,7 @@ export default async function Page({ params }: { params: { slug: string } }) {
           )
 
           )}
+          <Comments data={comments} postId={params.slug} />
         </div>
       </div>
       {/* <UserPannel inAdmin={false}/> */}
