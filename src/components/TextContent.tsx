@@ -1,4 +1,6 @@
 import parse from "html-react-parser"
+import Markdown from 'react-markdown'
+
 export const textTranslate = (text: string) => {
     const splitStrong = (piece: string): string => {
         if (piece.includes("**")) {
@@ -28,9 +30,11 @@ const TextContent = ({ text }: {
     const translated = textTranslate(text);
 
     return (
-        <div className="text-content w-full text-slate-500 leading-relaxed text-base tracking-wide">
-            {parse(translated)}
+        // <div className="text-content w-full text-slate-500 leading-relaxed text-base tracking-wide">
+        <div className="prose ">
+            <Markdown>{text}</Markdown>
         </div>
+        // </div>
     )
 }
 

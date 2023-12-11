@@ -36,7 +36,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
           {content.map((section) => (
             section.type == "text" ?
               <>
-                {section.sectionTitle == "" || !section.sectionTitle ? null : <div className=" w-full text-slate-700 leading-relaxed text-2xl font-bold tracking-wide">{section.sectionTitle}</div>}
                 <TextContent key={section.id} text={section.content as string} />
               </>
               : section.type == "image" ?

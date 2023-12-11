@@ -1,6 +1,7 @@
 "use client"
 import { Section, TextSection } from "./PostEditor";
 import { ReactNode, useState, memo } from "react";
+import Markdown from "react-markdown";
 
 type props = {
     section: TextSection,
@@ -15,6 +16,7 @@ const TextUploader = ({
     writeTextHandler,
     addSection
 }: props) => {
+    const [isPreview, serIsPreview] = useState(false)
     const DeleteBtn = () => {
         return (
             <div className="absolute top-3 right-3 rounded hover:text-slate-500 hover:cursor-pointer" onClick={() => deleteHandler(section.id)}>
@@ -42,14 +44,14 @@ const TextUploader = ({
             </button>
         </div >
     )
-    const handleOnClick = (e:any) => {
+    const handleOnClick = (e: any) => {
         e.preventDefault()
         const fakeInputChange = {
-            preventDefault:()=>{},
-            target:{
-                name:e.target.name,
-                role:"title",
-                value:""
+            preventDefault: () => { },
+            target: {
+                name: e.target.name,
+                role: "title",
+                value: ""
             }
         }
         writeTextHandler(fakeInputChange)
@@ -60,13 +62,21 @@ const TextUploader = ({
             {section.deletable ? <DeleteBtn /> : ""}
             <AddingBtns />
             <label htmlFor={`section${section.id}`} className="block font-bold mb-2">Section {section.id}.</label>
-            <label htmlFor={`section_title${section.id}`} className="block font-medium mb-2">title :</label>
-            <div className="flex items-center gap-2 ">
-                <input type="text" id={`section_title${section.id}`} placeholder="optional" role="title" minLength={3} name={`${section.id}`} value={section.sectionTitle} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></input>
-                <button name={`${section.id}`} className="px-1 hover:bg-slate-200 h-fit rounded bg-slate-100" onClick={handleOnClick}>clear</button>
+            {/* <label htmlFor={`section${section.id}`} className="block font-semibold mb-2">content :</label> */}
+            <div className="mb-2">
+                <input type="checkbox" name="preview" id={`preview${section.id}`} className="mx-1" onClick={() => { serIsPreview(pre => !pre) }} />
+                <label htmlFor={`preview${section.id}`} className="text-slate-700 font-medium">preview</label>
             </div>
-            <label htmlFor={`section${section.id}`} className="block font-medium mb-2">content :</label>
-            <textarea id={`section${section.id}`} role="article" name={`${section.id}`} value={section.content} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+            {
+                !isPreview ?
+                    <textarea id={`section${section.id}`} role="article" rows={4} name={`${section.id}`} value={section.content} onChange={writeTextHandler} className="w-full border border-gray-300 py-2 px-3 rounded-lg"></textarea>
+                    :
+                    <div className=" prose bg-white p-3 rounded-lg">
+                        <Markdown>
+                            {section.content}
+                        </Markdown>
+                    </div>
+            }
 
         </div>
     )

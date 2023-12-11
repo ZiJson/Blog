@@ -15,7 +15,6 @@ export type TextSection = {
     type: 'text'
     deletable: boolean
     content: string,
-    sectionTitle: string
 }
 
 export type CodeSection = {
@@ -59,15 +58,14 @@ const newCodeSection: CodeSection = {
     deletable: true,
     language: "jsx",
     content: "",
-    description:""
+    description: ""
 }
 
 const newTextSection: TextSection = {
     id: 0,
     type: "text",
     deletable: true,
-    content: "",
-    sectionTitle: ""
+    content: ""
 }
 
 const PostEditor = ({ post }: { post: Post }) => {
@@ -82,15 +80,12 @@ const PostEditor = ({ post }: { post: Post }) => {
         if (curSection.type != "text") return
         const newSections = sections.map((section) => {
             if (section.id == id) {
-                return role == "article" ?
+                return (
                     {
                         ...section,
                         content: value
-                    } :
-                    {
-                        ...section,
-                        sectionTitle: value
                     }
+                )
             }
             return section
         })
@@ -101,7 +96,7 @@ const PostEditor = ({ post }: { post: Post }) => {
 
     const writeCodeHandler = useCallback((e: any) => {
         e.preventDefault()
-        const { name:id, value } = e.target;
+        const { name: id, value } = e.target;
         console.log(id)
         const curSection = sections[id - 1];
         if (curSection.type != "code") return
@@ -138,9 +133,9 @@ const PostEditor = ({ post }: { post: Post }) => {
 
     }, [sections])
 
-    const writeCodeDescriptionHandler = useCallback((e:any)=>{
+    const writeCodeDescriptionHandler = useCallback((e: any) => {
         e.preventDefault();
-        const { name:id, value } = e.target;
+        const { name: id, value } = e.target;
         const curSection = sections[id - 1];
         if (curSection.type != "code") return
         const newSections = sections.map((section) => {
@@ -155,7 +150,7 @@ const PostEditor = ({ post }: { post: Post }) => {
         setSections(newSections)
 
 
-    },[sections])
+    }, [sections])
 
     const writeImageDescriptionHandler = useCallback((e: any) => {
         e.preventDefault();
@@ -248,7 +243,7 @@ const PostEditor = ({ post }: { post: Post }) => {
                         :
                         section.type == "image" ?
                             <ImageUploader key={section.id} section={section} deleteHandler={deleteSection} updateImageSection={updateImageSection} addSection={addSection} writeImageDescriptionHandler={writeImageDescriptionHandler} />
-                            : <CodeUploader key={section.id} section={section} deleteHandler={deleteSection} writeCodeHandler={writeCodeHandler} addSection={addSection} onCodeLangChange={onCodeLangChange} writeCodeDescriptionHandler={writeCodeDescriptionHandler}/>
+                            : <CodeUploader key={section.id} section={section} deleteHandler={deleteSection} writeCodeHandler={writeCodeHandler} addSection={addSection} onCodeLangChange={onCodeLangChange} writeCodeDescriptionHandler={writeCodeDescriptionHandler} />
                 ))
             }
             <form>
