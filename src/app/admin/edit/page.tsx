@@ -13,8 +13,7 @@ const newTextSection: TextSection = {
     id: 0,
     type: "text",
     deletable: true,
-    content: "",
-    sectionTitle: ""
+    content: ""
 }
 
 const Page = () => {
